@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Business Card Maker",
@@ -17,7 +18,9 @@ export default function RootLayout({
       <body className="h-screen bg-slate-50">
         <Navbar />
 
-        <div className="container max-w-7xl mx-auto h-full">{children}</div>
+        <div className="container max-w-7xl mx-auto h-full">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );

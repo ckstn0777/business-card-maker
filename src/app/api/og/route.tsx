@@ -20,7 +20,7 @@ export async function GET() {
           style={{
             width: "100%",
             height: "100%",
-            backgroundColor: "#014849",
+            backgroundColor: `${businessCard.backgroundColor}`,
             display: "flex",
           }}
         >

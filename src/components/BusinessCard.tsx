@@ -1,33 +1,66 @@
-export default function BusinessCard() {
+import type { BusinessCardType } from "@/lib/validators/businessCard";
+import { businessCardChildIdAtom } from "@/store/businessCardAtom";
+import { useAtom } from "jotai";
+
+interface BusinessCardMakerProps {
+  businessCard: BusinessCardType;
+}
+
+export default function BusinessCard({ businessCard }: BusinessCardMakerProps) {
+  // const [, setChild] = useAtom(updateBusinessCardChild);
+  const [, setChildId] = useAtom(businessCardChildIdAtom);
+
   return (
-    <div className="bg-[#014849] aspect-[1.74/1] relative w-[352px] h-[202px]">
-      <div className="w-fit h-fit absolute inset-0 translate-x-[270px] translate-y-[20px]">
-        <p className="text-white text-[20px] tracking-[3px]">Logo</p>
-      </div>
-
-      <div className="w-fit h-fit absolute inset-0 translate-x-[30px] translate-y-[90px]">
-        <p className="text-white text-[12px]">ceo</p>
-      </div>
-
-      <div className="w-fit h-fit absolute inset-0 translate-x-[60px] translate-y-[85px]">
-        <p className="text-white text-[20px]">홍길동</p>
-      </div>
-
-      <div className="w-fit h-fit absolute inset-0 translate-x-[30px] translate-y-[120px]">
-        <p className="text-white text-[12px] leading-[18px]">
-          Mobile. 010-1234-5678
-          <br />
-          Email. gildong-hong@naver.com
-          <br />
-          서울시 마포구 양화로 45, 세아타워 16층
-        </p>
-        {/* <p className="text-white text-[12px] leading-[18px]">
-          Email. gildong-hong@naver.com
-        </p>
-        <p className="text-white text-[12px] leading-[18px]">
-          서울시 마포구 양화로 45, 세아타워 16층
-        </p> */}
-      </div>
+    <div
+      style={{
+        width: `${businessCard.width}px`,
+        height: `${businessCard.height}px`,
+        backgroundColor: `${businessCard.backgroundColor}`,
+        position: "relative",
+      }}
+    >
+      {businessCard.children.map((child, i) => (
+        <div
+          key={i}
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            transform: `translateX(${child.x}px) translateY(${child.y}px)`,
+          }}
+          onClick={() => {
+            setChildId(child.id);
+          }}
+        >
+          {child.type === "text" ? (
+            <p
+              style={{
+                padding: 0,
+                margin: 0,
+                color: child.color,
+                fontSize: child.fontSize,
+                fontWeight: "bold",
+                display: "flex",
+                flexDirection: "column",
+                cursor: "pointer",
+              }}
+            >
+              {child.text.split("<br />").map((line, i) => (
+                <span key={i}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+            </p>
+          ) : (
+            <img src={""} alt={""} />
+          )}
+        </div>
+      ))}
     </div>
   );
 }

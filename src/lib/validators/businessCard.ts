@@ -30,6 +30,7 @@ export const BusinessCardText = z.object({
 });
 
 export const BusinessCardImage = z.object({
+  id: z.number(),
   type: z.literal("image"),
   x: z.number().int().positive(),
   y: z.number().int().positive(),
@@ -46,4 +47,4 @@ export const BusinessCardValidator = z.object({
   children: z.array(z.union([BusinessCardText, BusinessCardImage])),
 });
 
-export type BusinessCard = z.infer<typeof BusinessCardValidator>;
+export type BusinessCardType = z.infer<typeof BusinessCardValidator>;
