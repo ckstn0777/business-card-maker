@@ -1,6 +1,45 @@
 {
-  "id": "1",
+  "id": 1,
   "width": 352,
   "height": 202,
-  "backgroundColor": "#000000"
+  "backgroundColor": "#014849",
+  "children": [
+    {
+      "id": 1,
+      "type": "text",
+      "text": "Logo",
+      "x": 270,
+      "y": 20,
+      "color": "#ffffff",
+      "fontSize": 20,
+      "fontWeight": 700
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "text": "ceo",
+      "x": 30,
+      "y": 90,
+      "color": "#ffffff",
+      "fontSize": 12
+    },
+    {
+      "id": 3,
+      "type": "text",
+      "text": "홍길동",
+      "x": 60,
+      "y": 85,
+      "color": "#ffffff",
+      "fontSize": 20
+    },
+    {
+      "id": 4,
+      "type": "text",
+      "text": "Mobile. 010-1234-5678<br />Email. gildong-hong@naver.com<br />서울시 마포구 양화로 45, 세아타워 16층",
+      "x": 30,
+      "y": 120,
+      "color": "#ffffff",
+      "fontSize": 12
+    }
+  ]
 }

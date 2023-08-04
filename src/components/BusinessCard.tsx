@@ -16,13 +16,17 @@ export default function BusinessCard() {
       <div className="w-fit h-fit absolute inset-0 translate-x-[30px] translate-y-[120px]">
         <p className="text-white text-[12px] leading-[18px]">
           Mobile. 010-1234-5678
+          <br />
+          Email. gildong-hong@naver.com
+          <br />
+          서울시 마포구 양화로 45, 세아타워 16층
         </p>
-        <p className="text-white text-[12px] leading-[18px]">
+        {/* <p className="text-white text-[12px] leading-[18px]">
           Email. gildong-hong@naver.com
         </p>
         <p className="text-white text-[12px] leading-[18px]">
           서울시 마포구 양화로 45, 세아타워 16층
-        </p>
+        </p> */}
       </div>
     </div>
   );
