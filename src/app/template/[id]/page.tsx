@@ -6,10 +6,10 @@ import {
   BusinessCardType,
   BusinessCardValidator,
 } from "@/lib/validators/businessCard";
-import { businessCardAtom } from "@/store/businessCardAtom";
+import { businessCardAtom, businessCardIdAtom } from "@/store/businessCardAtom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 
 interface PageProps {
@@ -20,21 +20,21 @@ interface PageProps {
 export default function Page({ params }: PageProps) {
   const { id } = params;
 
-  // const [count, setCount] = useAtom(businessCardIdAtom);
-  // setCount(Number(id));
+  const setCardId = useSetAtom(businessCardIdAtom);
+  setCardId(Number(id));
 
   // const { data: businessCard } = useQuery(["template", id], async () => {
   //   const { data } = await axios.get(`/api/business-card/${id}`);
   //   return BusinessCardValidator.parse(JSON.parse(data));
   // });
 
-  const [businessCard, setBusinessCard] = useAtom(businessCardAtom);
+  const businessCard = useAtomValue(businessCardAtom);
 
-  useEffect(() => {
-    axios.get(`/api/business-card/${id}`).then(({ data }) => {
-      setBusinessCard(BusinessCardValidator.parse(JSON.parse(data)));
-    });
-  }, [id, setBusinessCard]);
+  // useEffect(() => {
+  //   axios.get(`/api/business-card/${id}`).then(({ data }) => {
+  //     setBusinessCard(BusinessCardValidator.parse(JSON.parse(data)));
+  //   });
+  // }, [id, setBusinessCard]);
 
   // const businessCard = useAtomValue(businessCardAtom);
   // console.log(businessCard);

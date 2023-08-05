@@ -6,20 +6,25 @@ import axios from "axios";
 import { atom, useSetAtom, useAtom } from "jotai";
 import { loadable, selectAtom } from "jotai/utils";
 
-// export const businessCardIdAtom = atom(0);
+export const businessCardIdAtom = atom(0);
 
-// export const businessCardAtom = atom(async (get) => {
-//   if (get(businessCardIdAtom) === 0) {
-//     return null;
-//   }
+export const defaultValueAtom = atom(async (get) => {
+  if (get(businessCardIdAtom) === 0) {
+    return null;
+  }
 
-//   const { data } = await axios.get(
-//     `/api/business-card/${get(businessCardIdAtom)}`
-//   );
-//   return BusinessCardValidator.parse(JSON.parse(data));
-// });
+  const { data } = await axios.get(
+    `/api/business-card/${get(businessCardIdAtom)}`
+  );
+  return BusinessCardValidator.parse(JSON.parse(data));
+});
 
-export const businessCardAtom = atom<BusinessCardType | null>(null);
+const overwrittenValueAtom = atom(null);
+
+export const businessCardAtom = atom(
+  (get) => get(overwrittenValueAtom) || get(defaultValueAtom),
+  (_get, set, action: any) => set(overwrittenValueAtom, action)
+);
 
 export const businessCardChildIdAtom = atom(0); // 어떤 요소를 선택했는지 id 저장
 
@@ -48,9 +53,9 @@ export const businessCardChildIdAtom = atom(0); // 어떤 요소를 선택했는
 // const setBusinessCard = useSetAtom(businessCardChildAtom)
 
 export const businessCardChildAtom = atom(
-  (get) => {
+  async (get) => {
     const childId = get(businessCardChildIdAtom);
-    const businessCard = get(businessCardAtom);
+    const businessCard = await get(businessCardAtom);
 
     if (!businessCard || childId === 0) {
       return null;
@@ -58,8 +63,8 @@ export const businessCardChildAtom = atom(
 
     return businessCard.children.find((child) => child.id === childId);
   },
-  (get, set, value: BusinessCardType["children"][0]) => {
-    const businessCard = get(businessCardAtom);
+  async (get, set, value: BusinessCardType["children"][0]) => {
+    const businessCard = await get(businessCardAtom);
 
     if (!businessCard) {
       return;
@@ -85,11 +90,3 @@ export const businessCardChildAtom = atom(
     set(businessCardAtom, newBusinessCard);
   }
 );
-
-// const fnAtom = atom({ fn: () => "your function" });
-// const doWhateverFnAtom = atom(
-//   (get) => get(fnAtom),
-//   (get, set, newFn) => {
-//     set(fnAtom, { fn: newFn });
-//   }
-// );

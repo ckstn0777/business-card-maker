@@ -49,7 +49,7 @@ export default function BusinessCard({ businessCard }: BusinessCardMakerProps) {
                 cursor: "pointer",
               }}
             >
-              {child.text.split("<br />").map((line, i) => (
+              {child.text.split("\n").map((line, i) => (
                 <span key={i}>
                   {line}
                   <br />

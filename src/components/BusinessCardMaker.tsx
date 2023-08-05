@@ -3,7 +3,8 @@ import BusinessCard from "./BusinessCard";
 import { useAtom } from "jotai";
 import { businessCardChildAtom } from "@/store/businessCardAtom";
 import { Input } from "./ui/Input";
-import { TwitterPicker } from "react-color";
+import { HexColorInput, HexColorPicker } from "react-colorful";
+import TextareaAutosize from "react-textarea-autosize";
 
 interface BusinessCardMakerProps {
   businessCard: BusinessCardType;
@@ -29,7 +30,7 @@ export default function BusinessCardMaker({
           <div className="space-y-6">
             <div className="space-y-2">
               <h3 className="font-bold text-lg">텍스트</h3>
-              <Input
+              <TextareaAutosize
                 value={businessCardChild.text}
                 onChange={(e) =>
                   setBusinessCardChild({
@@ -37,6 +38,8 @@ export default function BusinessCardMaker({
                     text: e.target.value,
                   })
                 }
+                placeholder="Title"
+                className="w-full resize-none overflow-hidden px-3 py-2 text-sm rounded-md border border-input bg-background focus:outline-none"
               />
             </div>
 
@@ -74,7 +77,27 @@ export default function BusinessCardMaker({
 
             <div className="space-y-2">
               <h3 className="font-bold text-lg">폰트 색상</h3>
-              <TwitterPicker
+              <HexColorPicker
+                color={businessCardChild.color}
+                onChange={(e) => {
+                  setBusinessCardChild({
+                    ...businessCardChild,
+                    color: e,
+                  });
+                }}
+              />
+              <HexColorInput
+                className="flex h-10  rounded-md border border-input bg-background px-3 py-2 text-sm"
+                color={businessCardChild.color}
+                onChange={(e) => {
+                  setBusinessCardChild({
+                    ...businessCardChild,
+                    color: e,
+                  });
+                }}
+              />
+
+              {/* <TwitterPicker
                 triangle="hide"
                 color={businessCardChild.color}
                 onChange={(e) => {
@@ -83,7 +106,7 @@ export default function BusinessCardMaker({
                     color: e.hex,
                   });
                 }}
-              />
+              /> */}
             </div>
           </div>
         )}

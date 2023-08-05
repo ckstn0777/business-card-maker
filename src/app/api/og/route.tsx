@@ -51,7 +51,7 @@ export async function GET() {
                     flexDirection: "column",
                   }}
                 >
-                  {child.text.split("<br />").map((line, i) => (
+                  {child.text.split("\n").map((line, i) => (
                     <span key={i}>
                       {line}
                       <br />
