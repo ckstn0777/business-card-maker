@@ -21,8 +21,6 @@ export default function BusinessCardMaker({
   );
   const setBusinessCard = useSetAtom(businessCardAtom);
 
-  console.log(businessCardChild);
-
   return (
     <div className="flex-1 grid grid-cols-10 gap-10">
       <div className="col-span-7 border border-zinc-500 rounded-lg flex justify-center items-center">

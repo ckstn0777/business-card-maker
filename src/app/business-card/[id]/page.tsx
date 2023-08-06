@@ -24,7 +24,7 @@ export default function Page({ params }: Props) {
 
       <div className="w-full flex justify-center items-center gap-10">
         <img
-          className="flex-1 w-[50%] h-[50%] object-contain"
+          className="flex-1 w-[70%] h-[70%] object-contain"
           src={`/api/og?id=${id}`}
           alt="business-card"
         />

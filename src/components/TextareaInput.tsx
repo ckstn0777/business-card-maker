@@ -23,8 +23,8 @@ export default function TextareaInput({
     });
   }, [text]);
 
-  console.log("value", value);
-  console.log("text", text);
+  // console.log("value", value);
+  // console.log("text", text);
 
   return (
     <TextareaAutosize
