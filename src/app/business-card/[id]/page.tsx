@@ -15,6 +15,11 @@ export default function Page({ params }: Props) {
   //   navigator.clipboard.writeText(`https://localhost:3001/api/og?id=${id}`);
   // };
 
+  console.log(
+    "process.env.NEXT_PUBLIC_BASE_URL",
+    process.env.NEXT_PUBLIC_BASE_URL
+  );
+
   return (
     <div className="py-[120px] h-full flex flex-col justify-center items-center gap-10">
       <h2 className="text-2xl text-center font-semibold leading-[40px]">
