@@ -18,6 +18,9 @@ export default function BusinessCard({ businessCard }: BusinessCardMakerProps) {
         backgroundColor: `${businessCard.backgroundColor}`,
         position: "relative",
       }}
+      onClick={() => {
+        setChildId(0);
+      }}
     >
       {businessCard.children.map((child, i) => (
         <div
@@ -32,8 +35,16 @@ export default function BusinessCard({ businessCard }: BusinessCardMakerProps) {
             left: 0,
             transform: `translateX(${child.x}px) translateY(${child.y}px)`,
           }}
-          onClick={() => {
-            setChildId(child.id);
+          onClick={(e) => {
+            e.stopPropagation();
+
+            setChildId(0);
+
+            setTimeout(() => {
+              setChildId(child.id);
+            }, 0);
+
+            //setChildId(child.id);
           }}
         >
           {child.type === "text" ? (

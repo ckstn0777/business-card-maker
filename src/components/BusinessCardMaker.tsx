@@ -1,10 +1,13 @@
 import { BusinessCardType } from "@/lib/validators/businessCard";
 import BusinessCard from "./BusinessCard";
-import { useAtom } from "jotai";
-import { businessCardChildAtom } from "@/store/businessCardAtom";
+import { useAtom, useSetAtom } from "jotai";
+import {
+  businessCardAtom,
+  businessCardChildAtom,
+} from "@/store/businessCardAtom";
 import { Input } from "./ui/Input";
 import { HexColorInput, HexColorPicker } from "react-colorful";
-import TextareaAutosize from "react-textarea-autosize";
+import TextareaInput from "./TextareaInput";
 
 interface BusinessCardMakerProps {
   businessCard: BusinessCardType;
@@ -16,6 +19,9 @@ export default function BusinessCardMaker({
   const [businessCardChild, setBusinessCardChild] = useAtom(
     businessCardChildAtom
   );
+  const setBusinessCard = useSetAtom(businessCardAtom);
+
+  console.log(businessCardChild);
 
   return (
     <div className="flex-1 grid grid-cols-10 gap-10">
@@ -23,23 +29,43 @@ export default function BusinessCardMaker({
         <BusinessCard businessCard={businessCard} />
       </div>
 
+      {/* 오른쪽 사이드바 수정부분 */}
       <div className="col-span-3 bg-zinc-300 rounded-lg p-6">
-        {!businessCardChild && <div>선택된 요소가 없습니다. </div>}
+        {!businessCardChild && (
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <h3 className="font-bold text-lg">배경색</h3>
+              <HexColorPicker
+                color={businessCard.backgroundColor}
+                onChange={(e) => {
+                  setBusinessCard({
+                    ...businessCard,
+                    backgroundColor: e,
+                  });
+                }}
+              />
+              <HexColorInput
+                className="flex h-10  rounded-md border border-input bg-background px-3 py-2 text-sm"
+                color={businessCard.backgroundColor}
+                onChange={(e) => {
+                  setBusinessCard({
+                    ...businessCard,
+                    backgroundColor: e,
+                  });
+                }}
+              />
+            </div>
+          </div>
+        )}
 
         {businessCardChild?.type === "text" && (
           <div className="space-y-6">
             <div className="space-y-2">
               <h3 className="font-bold text-lg">텍스트</h3>
-              <TextareaAutosize
+              <TextareaInput
                 value={businessCardChild.text}
-                onChange={(e) =>
-                  setBusinessCardChild({
-                    ...businessCardChild,
-                    text: e.target.value,
-                  })
-                }
-                placeholder="Title"
-                className="w-full resize-none overflow-hidden px-3 py-2 text-sm rounded-md border border-input bg-background focus:outline-none"
+                setBusinessCardChild={setBusinessCardChild}
+                businessCardChild={businessCardChild}
               />
             </div>
 

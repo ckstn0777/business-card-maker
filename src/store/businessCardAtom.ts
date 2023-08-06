@@ -16,7 +16,7 @@ export const defaultValueAtom = atom(async (get) => {
   const { data } = await axios.get(
     `/api/business-card/${get(businessCardIdAtom)}`
   );
-  return BusinessCardValidator.parse(JSON.parse(data));
+  return BusinessCardValidator.parse(data);
 });
 
 const overwrittenValueAtom = atom(null);
@@ -55,9 +55,14 @@ export const businessCardChildIdAtom = atom(0); // 어떤 요소를 선택했는
 export const businessCardChildAtom = atom(
   async (get) => {
     const childId = get(businessCardChildIdAtom);
+    if (childId === 0) {
+      console.log("weiofjowejfoewjif");
+      return null;
+    }
+
     const businessCard = await get(businessCardAtom);
 
-    if (!businessCard || childId === 0) {
+    if (!businessCard) {
       return null;
     }
 

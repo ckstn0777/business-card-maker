@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -19,6 +20,7 @@ interface PageProps {
 }
 export default function Page({ params }: PageProps) {
   const { id } = params;
+  const router = useRouter();
 
   const setCardId = useSetAtom(businessCardIdAtom);
   setCardId(Number(id));
@@ -47,7 +49,7 @@ export default function Page({ params }: PageProps) {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      router.push(`/business-card/${data}`);
     },
     onError: (error) => {
       alert(error);
