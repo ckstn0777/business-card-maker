@@ -12,7 +12,7 @@ export async function GET(req: Request) {
       return new Response("Not Found", { status: 404 });
     }
 
-    const res = await fetch(`http://localhost:3001/api/business-card/${id}`);
+    const res = await fetch(`/api/business-card/${id}`);
     const data = await res.json();
 
     const businessCard = BusinessCardValidator.parse(data);
