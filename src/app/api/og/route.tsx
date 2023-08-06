@@ -1,5 +1,5 @@
 import { BusinessCardValidator } from "@/lib/validators/businessCard";
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/server";
 
 export const runtime = "edge";
 
@@ -87,7 +87,7 @@ export async function GET(req: Request) {
     );
   } catch (error) {
     console.log(error);
-    return new Response(`Failed to generate the image`, {
+    return new Response(error as any, {
       status: 500,
     });
   }
