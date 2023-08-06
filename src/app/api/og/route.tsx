@@ -3,12 +3,19 @@ import { ImageResponse } from "@vercel/og";
 
 export const runtime = "edge";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const res = await fetch(`http://localhost:3001/api/business-card/1`);
+    const url = new URL(req.url);
+    const id = url.searchParams.get("id");
+
+    if (!id) {
+      return new Response("Not Found", { status: 404 });
+    }
+
+    const res = await fetch(`http://localhost:3001/api/business-card/${id}`);
     const data = await res.json();
 
-    const businessCard = BusinessCardValidator.parse(JSON.parse(data));
+    const businessCard = BusinessCardValidator.parse(data);
 
     // w-fit h-fit absolute inset-0 translate-x-[270px] translate-y-[20px]
     // w-fit : width: fit-content

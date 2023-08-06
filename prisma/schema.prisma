@@ -1,4 +1,3 @@
-// schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,8 +8,104 @@ datasource db {
   relationMode = "prisma"
 }
 
+model Account {
+  id                String  @id
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  @@unique([provider, providerAccountId])
+}
+
+model Comment {
+  id        String   @id
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  authorId  String
+  postId    String
+  replyToId String?
+}
+
+model CommentVote {
+  userId    String
+  commentId String
+  type      CommentVote_type
+
+  @@id([userId, commentId])
+}
+
+model Post {
+  id          String   @id
+  title       String
+  content     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  subredditId String
+  authorId    String
+}
+
+model Session {
+  id           String   @id
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+}
+
+model Subreddit {
+  id        String   @id
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  creatorId String?
+
+  @@index([name])
+}
+
+model Subscription {
+  userId      String
+  subredditId String
+
+  @@id([userId, subredditId])
+}
+
+model User {
+  id            String    @id
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+}
+
+model Vote {
+  userId String
+  postId String
+  type   Vote_type
+
+  @@id([userId, postId])
+}
+
+enum Vote_type {
+  UP
+  DOWN
+}
+
+enum CommentVote_type {
+  UP
+  DOWN
+}
+
 model BusinessCard {
-  id String @id @default(cuid())
+  id      String @id @default(cuid())
+  content Json
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

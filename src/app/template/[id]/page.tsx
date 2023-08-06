@@ -7,7 +7,7 @@ import {
   BusinessCardValidator,
 } from "@/lib/validators/businessCard";
 import { businessCardAtom, businessCardIdAtom } from "@/store/businessCardAtom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
@@ -39,6 +39,21 @@ export default function Page({ params }: PageProps) {
   // const businessCard = useAtomValue(businessCardAtom);
   // console.log(businessCard);
 
+  const { mutate: createBusinessCard } = useMutation({
+    mutationFn: async () => {
+      const { data } = await axios.post(`/api/business-card`, {
+        businessCard,
+      });
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
+
   if (!businessCard) return null;
 
   return (
@@ -46,7 +61,7 @@ export default function Page({ params }: PageProps) {
       <BuisnessCardMaker businessCard={businessCard} />
 
       <div className="flex justify-end gap-4">
-        <Button>Publish</Button>
+        <Button onClick={() => createBusinessCard()}>Publish</Button>
         <Button variant="outline">Cancle</Button>
       </div>
     </div>
